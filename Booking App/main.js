@@ -1,17 +1,4 @@
 
-axios
-.get('https://crudcrud.com/api/9592d8ce8fbb46f7977a866714f50519/userdetails')  //here urlllllllllllllllllllll
-.then(response => {
-    console.log(response.data);
-    if(response.data){
-        response.data.forEach((res) => {
-            showOutput(res)
-        } )
-    }
-})
-.catch(err => console.log(err))
-
-
 function showOutput(res){
     const li = document.createElement('li');
     li.id = res._id;
@@ -43,6 +30,18 @@ function showOutput(res){
 
 
 document.addEventListener('DOMContentLoaded', ()=>{
+
+    axios
+    .get('https://crudcrud.com/api/9592d8ce8fbb46f7977a866714f50519/userdetails')  //here urlllllllllllllllllllll
+    .then(response => {
+        console.log(response.data);
+        if(response.data){
+            response.data.forEach((res) => {
+                showOutput(res)
+            } )
+        }
+    })
+    .catch(err => console.log(err))
 
     document.querySelector('form').onsubmit = (e) =>{
         e.preventDefault();
