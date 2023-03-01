@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     function postuser(obj){
         axios
-        .post('https://crudcrud.com/api/9592d8ce8fbb46f7977a866714f50519/userdetails',obj)  //here urlllllllllllllllllllll
+        .post('https://crudcrud.com/api/9592d8ce8fbb46f7977a866714f50519/userdetails',obj)  //here urllllllllllllllllllll
         .then(res => {
             showOutput(res.data)
         })
