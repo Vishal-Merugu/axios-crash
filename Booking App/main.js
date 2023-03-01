@@ -52,14 +52,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
             "name" : name,
             "email" : email,
             "phone" : phone
-        }
-        
+        }  
         postuser(obj);
-
         document.querySelector('#name').value = '';
         document.querySelector('#email').value = '';
-        document.querySelector('#phone').value = '';
-        
+        document.querySelector('#phone').value = '';    
     }
 
 
@@ -70,10 +67,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
             showOutput(res.data)
         })
     }
-   
 
 
+    document.querySelector("#list").onclick = (e) =>{
+        if(e.target.id === "xbtn"){
+            const id = e.target.parentElement.parentElement.id;
+            deleteuser(id)
+        }
+
+        function deleteuser(id){
+            document.getElementById(id).remove();
+            axios
+            .delete(`https://crudcrud.com/api/9592d8ce8fbb46f7977a866714f50519/userdetails/${id}`)  //here urlllllllllllllllllllll    
+        }
+       
+    }
     
-
 
 });
