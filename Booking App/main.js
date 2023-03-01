@@ -32,7 +32,7 @@ function showOutput(res){
 document.addEventListener('DOMContentLoaded', ()=>{
 
     axios
-    .get('https://crudcrud.com/api/9592d8ce8fbb46f7977a866714f50519/userdetails')  //here urlllllllllllllllllllll
+    .get('https://crudcrud.com/api/1f1bf1dc620646a6807f73d9d430a309/userdetails')  //here urlllllllllllllllllllll
     .then(response => {
         console.log(response.data);
         if(response.data){
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     function postuser(obj){
         axios
-        .post('https://crudcrud.com/api/9592d8ce8fbb46f7977a866714f50519/userdetails',obj)  //here urllllllllllllllllllll
+        .post('https://crudcrud.com/api/1f1bf1dc620646a6807f73d9d430a309/userdetails',obj)  //here urllllllllllllllllllll
         .then(res => {
             showOutput(res.data)
         })
@@ -75,13 +75,35 @@ document.addEventListener('DOMContentLoaded', ()=>{
             deleteuser(id)
         }
 
+        else if(e.target.id === "editbtn"){
+            const id = e.target.parentElement.parentElement.id;
+            getuser(id);
+            deleteuser(id);
+        }
+
         function deleteuser(id){
             document.getElementById(id).remove();
             axios
-            .delete(`https://crudcrud.com/api/9592d8ce8fbb46f7977a866714f50519/userdetails/${id}`)  //here urlllllllllllllllllllll    
+            .delete(`https://crudcrud.com/api/1f1bf1dc620646a6807f73d9d430a309/userdetails/${id}`)  //here urlllllllllllllllllllll    
         }
+
+        function edituser(obj){
+            document.querySelector('#name').value = obj.name;
+            document.querySelector('#email').value = obj.email;
+            document.querySelector('#phone').value = obj.phone;
+
+        }
+
+        function getuser(id){
+            axios
+            .get(`https://crudcrud.com/api/1f1bf1dc620646a6807f73d9d430a309/userdetails/${id}`)   //here urlllllllllllllllllllll
+            .then(res =>{
+                edituser(res.data)
+            })
+         }
        
     }
     
+        
 
 });
