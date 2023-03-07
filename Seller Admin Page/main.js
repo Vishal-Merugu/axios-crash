@@ -1,21 +1,22 @@
 document.addEventListener('DOMContentLoaded',() => {
 
-    axios
-    .get('https://https://crudcrud.com/api/22204bc202e848278c921829c1edebc0/products')  //urlllllllllll hereeeeeeeeeeeeeeeee
-    .then(res => {
-        if(res.data){
-            var  total = 0
-            res.data.forEach((obj) =>{
-                total += parseInt(obj.price);
-                showOutput(obj)
-            }) 
-            document.querySelector('#total').textContent  = `total price = ${total}`
-        }       
-    })
-    .catch(err => {
-        console.log('Something went wrong ');
-        console.log("error : ",err);
-    })
+    async function always_run(){
+        try{
+            const response = await fetch('https://crudcrud.com/api/108be208744f4f0aa4f9c5c882aeee23/products'); ///urllllllllllll hereeeeeeeeeeeeeeeeeeeeee
+            const data = await response.json();
+            if(data){
+                var total = 0;
+                data.forEach((obj) =>{
+                    total += parseInt(obj.price);
+                    showOutput(obj)
+                })
+                document.querySelector('#total').textContent = `${total}`
+            }
+        }catch(err){
+            console.log(err);
+        }   
+    }
+    always_run();
 
     document.querySelector('form').onsubmit = (e) =>{
         e.preventDefault();
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded',() => {
         product.textContent = obj.product;
 
         const price = document.createElement('td');
-        price.textContent = obj.price;
+        price.textContent = parseInt(obj.price);
 
         const del = document.createElement('td');
         btn = document.createElement('button');
@@ -54,18 +55,23 @@ document.addEventListener('DOMContentLoaded',() => {
     }
 
 
-    function postProduct(obj){
-        axios
-        .post('https://crudcrud.com/api/22204bc202e848278c921829c1edebc0/products',obj)  //urlllllll hereeeeeeeeeeeeeee 
-        .then(res => {
-            prev = document.querySelector('#total').textContent;
-            total.textContent = parseInt(prev) + parseInt(res.data.price);
-            showOutput(res.data)
-        })
-        .catch(err =>{
-            console.log('Something Went Wrong');
-            console.log("error : ", err);
-        })
+    async function postProduct(obj){
+        try{
+            //url hereeeeeeeeeeeeeeeeeeeeeeeeeee
+            const response = await fetch('https://crudcrud.com/api/108be208744f4f0aa4f9c5c882aeee23/products',{
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify(obj)
+            })
+            const data = await response.json()
+            const prev = document.querySelector('#total').textContent;
+            total.textContent = parseInt(prev) + parseInt(data.price);
+            showOutput(data)
+        }catch(err){
+            console.log(err);
+        }
     }
 
 
@@ -82,10 +88,33 @@ document.addEventListener('DOMContentLoaded',() => {
     }
 
 
-    function deleteProduct(id){
-        axios
-        .delete(`https://crudcrud.com/api/22204bc202e848278c921829c1edebc0/products/${id}`)
+    async function deleteProduct(id){
+        try{
+            const response = await fetch(`https://crudcrud.com/api/108be208744f4f0aa4f9c5c882aeee23/products/${id}`,{
+                method : 'DELETE'
+            })
+        }catch(error){
+            console.log(error);
+        }
     }
 
 
 });
+
+
+
+
+
+
+
+
+
+// async function fetchData() {
+//     try {
+//         const response = await fetch('http://...com/data');
+//         const data = await response.json();
+//         console.log(data);
+//       } catch (error) {
+//         console.error(error);
+//       }
+// }
