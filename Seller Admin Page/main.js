@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded',() => {
 
-    async function always_run(){
+    var url = 'https://crudcrud.com/api/108be208744f4f0aa4f9c5c882aeee23/products'
+
+    
+    async function always_run(cb){
         try{
-            const response = await fetch('https://crudcrud.com/api/108be208744f4f0aa4f9c5c882aeee23/products'); ///urllllllllllll hereeeeeeeeeeeeeeeeeeeeee
-            const data = await response.json();
+            const response = await axios.get(url);
+            const data = await response.data;
             if(data){
                 var total = 0;
                 data.forEach((obj) =>{
@@ -16,7 +19,7 @@ document.addEventListener('DOMContentLoaded',() => {
             console.log(err);
         }   
     }
-    always_run();
+    always_run(showOutput);
 
     document.querySelector('form').onsubmit = (e) =>{
         e.preventDefault();
@@ -28,7 +31,7 @@ document.addEventListener('DOMContentLoaded',() => {
             "product" : product,
             "price" :  price
         }
-        postProduct(obj);
+        postProduct(obj,showOutput);
     }
 
     function showOutput(obj){
@@ -55,20 +58,14 @@ document.addEventListener('DOMContentLoaded',() => {
     }
 
 
-    async function postProduct(obj){
+    async function postProduct(obj,cb){
         try{
             //url hereeeeeeeeeeeeeeeeeeeeeeeeeee
-            const response = await fetch('https://crudcrud.com/api/108be208744f4f0aa4f9c5c882aeee23/products',{
-                method : 'POST',
-                headers : {
-                    'Content-Type' : 'application/json'
-                },
-                body : JSON.stringify(obj)
-            })
-            const data = await response.json()
+            const response = await axios.post(url,obj)
+            const data = await response.data
             const prev = document.querySelector('#total').textContent;
             total.textContent = parseInt(prev) + parseInt(data.price);
-            showOutput(data)
+            cb(data);
         }catch(err){
             console.log(err);
         }
@@ -90,9 +87,7 @@ document.addEventListener('DOMContentLoaded',() => {
 
     async function deleteProduct(id){
         try{
-            const response = await fetch(`https://crudcrud.com/api/108be208744f4f0aa4f9c5c882aeee23/products/${id}`,{
-                method : 'DELETE'
-            })
+            const response = await axios.delete(`${url}/${id}`)
         }catch(error){
             console.log(error);
         }
@@ -100,11 +95,6 @@ document.addEventListener('DOMContentLoaded',() => {
 
 
 });
-
-
-
-
-
 
 
 
