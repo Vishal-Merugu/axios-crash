@@ -16,27 +16,30 @@
     </header>
     <div class="container">
         <div class="row">
-            <div class="col-12 ">
+            <div class="coli col-12 ">
                 <div id = "form" >
                     <form >
                         <div class="mb-3">
                             <label class = "form-label">Name</label>
-                            <input type="text" class = "form-control" id = "name">
+                            <input type="text" class = "form-control" id = "name" name = 'name'>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">E-mail</label>
-                            <input type="email" class = "form-control" id = "email">
+                            <input type="email" class = "form-control" id = "email" name = 'email'>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Phone</label>
-                            <input type="number" class = "form-control" id = "phone">
+                            <input type="number" class = "form-control" id = "phone" name = 'phone'>
+                        </div>
+                        <div class="mb-3">
+                            <input type="hidden" name = 'userId' id = "userId">
                         </div>
                         <input type="submit" class = "btn btn-dark w-100 ">
                     </form>
                 </div>
             </div>
             <div class="col d-flex justify-content-center">
-                <ul id = "list" class = "">
+                <ul id = "list" class = "col-sm-12 col-md-10 col-lg-10 col-xl-8">
                 </ul>
             </div>
         </div>            

@@ -1,9 +1,9 @@
+const url = 'http://localhost:3000/booking'
 
 function showOutput(res){
     const li = document.createElement('li');
-    li.id = res._id;
+    li.id = res.id;
     li.innerHTML = `${res.name} ${res.email} ${res.phone}`;
-
     const xbtn = document.createElement('button');
     xbtn.classList.add('btn','btn-sm','btn-danger','me-2');
     xbtn.classList.add('btn','btn-sm','btn-danger','me-2');
@@ -29,12 +29,12 @@ function showOutput(res){
 }
 
 
-document.addEventListener('DOMContentLoaded', ()=>{
 
+
+document.addEventListener('DOMContentLoaded', ()=>{
     axios
-    .get('https://crudcrud.com/api/1f1bf1dc620646a6807f73d9d430a309/userdetails')  //here urlllllllllllllllllllll
+    .get(`${url}/users`)  //here urlllllllllllllllllllll
     .then(response => {
-        console.log(response.data);
         if(response.data){
             response.data.forEach((res) => {
                 showOutput(res)
@@ -48,12 +48,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const name = document.querySelector('#name').value;
         const email = document.querySelector('#email').value;
         const phone = document.querySelector('#phone').value;
-        const obj = {
+        const userId = document.querySelector('#userId').value;
+        let obj = {
             "name" : name,
             "email" : email,
             "phone" : phone
-        }  
-        postuser(obj);
+        }
+        if (userId !== ''){
+            putUser(obj,userId)
+        }else{
+            postuser(obj);
+        }
         document.querySelector('#name').value = '';
         document.querySelector('#email').value = '';
         document.querySelector('#phone').value = '';    
@@ -62,7 +67,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     function postuser(obj){
         axios
-        .post('https://crudcrud.com/api/1f1bf1dc620646a6807f73d9d430a309/userdetails',obj)  //here urllllllllllllllllllll
+        .post(`${url}/user`,obj)  //here urllllllllllllllllllll
         .then(res => {
             showOutput(res.data)
         })
@@ -77,33 +82,39 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
         else if(e.target.id === "editbtn"){
             const id = e.target.parentElement.parentElement.id;
+            document.getElementById(id).remove();
             getuser(id);
-            deleteuser(id);
         }
 
         function deleteuser(id){
             document.getElementById(id).remove();
             axios
-            .delete(`https://crudcrud.com/api/1f1bf1dc620646a6807f73d9d430a309/userdetails/${id}`)  //here urlllllllllllllllllllll    
+            .delete(`${url}/user/${id}`)  //here urlllllllllllllllllllll   
+            return
         }
 
         function edituser(obj){
             document.querySelector('#name').value = obj.name;
             document.querySelector('#email').value = obj.email;
             document.querySelector('#phone').value = obj.phone;
-
+            document.querySelector('#userId').value = obj.id;
         }
 
         function getuser(id){
             axios
-            .get(`https://crudcrud.com/api/1f1bf1dc620646a6807f73d9d430a309/userdetails/${id}`)   //here urlllllllllllllllllllll
+            .get(`${url}/user/${id}`)   //here urlllllllllllllllllllll
             .then(res =>{
                 edituser(res.data)
             })
-         }
-       
-    }
-    
+         }  
         
-
+    }
+    function putUser(obj,userId){
+        axios
+        .put(`${url}/user/${userId}`,obj)
+        .then(res => {
+            showOutput(res.data)
+        })
+    }
+        
 });
